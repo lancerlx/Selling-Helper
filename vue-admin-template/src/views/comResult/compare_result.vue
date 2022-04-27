@@ -1,28 +1,22 @@
 <template>
   <div class="compare-container">
     <div class="top">
-      <template v-for="i in 3">
-        <div class="topBox" :key="i">
+      <template >
+        <div class="topBox" >
           <div class="topTitle">
-            收益预测{{ i == 1 ? "一" : i == 2 ? "二" : "三" }}
+            收益预测
           </div>
-          <div class="iconBox">
-            <img
-              class="img"
-              :src="require('@/icons/dashboardIcon/icon_storage.png')"
-            />
-            <img
-              class="img"
-              :src="require('@/icons/dashboardIcon/icon_charge.png')"
-            />
-            <img
-              class="img"
-              :src="require('@/icons/dashboardIcon/icon_light.png')"
-            />
+          <div class="midBox">
+          <div class="iconBox" v-for="(item, i) in list" :key="i">
+            <img class="img" :src="scene_img(item)">
           </div>
-          <div>2022/04/06 16:37</div>
+          </div>
+          <div class="comTime" v-for="(item, i) in time" :key="i">
+              {{item}}
+          </div>
+          <img class="delete" :src="require('@/icons/dashboardIcon/icon_delete.png')"/>
         </div>
-        <div class="vs" v-if="i != 3" :key="i">vs</div>
+        <!-- <div class="vs" v-if="i != 3" :key="i">vs</div> -->
       </template>
     </div>
     <div
@@ -38,7 +32,7 @@
           {{ data.type }}
         </p>
       </div>
-      <div class="formBox" v-for="i of 3" :key="i">
+      <div class="formBox" >
         <div
           :class="
             i == index + 1
@@ -191,8 +185,16 @@
 
 <script>
 export default {
+  methods: {
+    scene_img(item){
+      return require("@/icons/dashboardIcon/icon_" + item + ".png");
+    }
+  },
   data() {
     return {
+      
+      time:["2022/06/04 16:37"],
+      list:["wind","light","storage"],
       listData: [
         {
           items: [
@@ -219,7 +221,7 @@ export default {
               irr: 21.79,
               avgPorfitBeforeTax: 11.83,
               avgPorfitAfterTax: 8.87,
-              type: "charge",
+              type: "pile",
               backColor: "#ffd9ca",
             },
             {
@@ -333,23 +335,30 @@ p {
 .topBox {
   width: 240px;
   padding: 24px;
-  background: #ffffff;
   box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-flow: column;
   align-items: center;
   justify-content: center;
   border-radius: 12px;
-  
 }
 
-.topBox .iconBox {
-  margin: 12px 0;
+.topTitle{
+
+}
+.iconBox {
+  color:blue;
+  /* margin: 10px 0; */
   width: 100%;
-  padding: 0 10px;
+  padding: 20px 15px;
+}
+
+.midBox{
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: row;
+}
+.comTime{
+/* margin: 10px 0; */
 }
 .vs {
   width: 30px;
